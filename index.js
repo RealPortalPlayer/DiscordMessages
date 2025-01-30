@@ -35,6 +35,6 @@ for (const id of messages) {
 console.log("Parsing server index")
 
 for (const id of Object.keys(serverIndex))
-    html += `<a href="${id}.html">${serverIndex[id]} (${parsedMessages[id].length} messages) (${id})</a><br>`
+    html += `<a href="${id}.html">${id} with ${parsedMessages[id].length} messages: ${serverIndex[id]}</a><br>`
 
 writeFileSync("parsed/index.html", html)
