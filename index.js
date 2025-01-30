@@ -1,3 +1,6 @@
+// Copyright (c) 2025, PortalPlayer <email@portalplayer.xyz>
+// Licensed under MIT <https://opensource.org/licenses/MIT>
+
 const {readFileSync, writeFileSync, readdirSync} = require("fs")
 
 console.log("Parsing server index")
