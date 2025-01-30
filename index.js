@@ -3,22 +3,16 @@
 
 const {readFileSync, writeFileSync, readdirSync} = require("fs")
 
-console.log("Parsing server index")
+console.log("Reading server index")
 
 const serverIndex = JSON.parse(readFileSync("package/messages/index.json").toString())
 
 let html = ""
 
-for (const id of Object.keys(serverIndex))
-    html += `<a href="${id}.html">${serverIndex[id]} (${id})</a><br>`
-
-writeFileSync("parsed/index.html", html)
-
-html = ""
-
 console.log("Parsing messages")
 
 const messages = readdirSync("package/messages")
+const parsedMessages = {}
 
 for (const id of messages) {
     if (!id.startsWith("c"))
@@ -28,7 +22,7 @@ for (const id of messages) {
 
     console.log(`Doing: ${serverIndex[parsedId]} (${parsedId})`)
 
-    const messages = JSON.parse(readFileSync(`package/messages/${id}/messages.json`).toString())
+    parsedMessages[parsedId] = JSON.parse(readFileSync(`package/messages/${id}/messages.json`).toString())
 
     for (const message of messages)
         html += `[${message.ID} @ ${message.Timestamp}]: ${message.Contents}<br>` // TODO: attachments?
@@ -37,3 +31,10 @@ for (const id of messages) {
 
     html = ""
 }
+
+console.log("Parsing server index")
+
+for (const id of Object.keys(serverIndex))
+    html += `<a href="${id}.html">${serverIndex[id]} (${parsedMessages[id].length} messages) (${id})</a><br>`
+
+writeFileSync("parsed/index.html", html)
