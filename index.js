@@ -24,13 +24,15 @@ for (const id of messages) {
 
     parsedMessages[parsedId] = JSON.parse(readFileSync(`package/messages/${id}/messages.json`).toString())
 
-    for (const message of messages)
+    for (const message of parsedMessages[parsedId])
         html += `[${message.ID} @ ${message.Timestamp}]: ${message.Contents}<br>` // TODO: attachments?
 
     writeFileSync(`parsed/${parsedId}.html`, html)
 
     html = ""
 }
+
+html = ""
 
 console.log("Parsing server index")
 
